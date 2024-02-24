@@ -24,7 +24,6 @@ const authUser = asyncHandler(async (req, res) => {
       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 Days
     });
 
-
     res.json({
       _id: user._id,
       name: user.name,
@@ -50,7 +49,8 @@ const registerUser = asyncHandler(async (req, res) => {
 // @access Private
 
 const logoutUser = asyncHandler(async (req, res) => {
-  res.send("Logout user");
+  res.clearCookie("jwt");
+  res.status(200).json({ message: "Logout successfully" });
 });
 
 // @desc Get user profile
