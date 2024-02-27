@@ -74,7 +74,7 @@ const CartScreen = () => {
       </Col>
       <Col md={4}>
         <Card>
-          <ListGroup>
+          <ListGroup variant="flush">
             <ListGroup.Item>
               <h2>Subtotal ({cartItems.reduce((a, c) => a + c.qty, 0)}) items</h2>$
               {cartItems.reduce((a, c) => a + c.qty * c.price, 0).toFixed(2)}
@@ -86,7 +86,7 @@ const CartScreen = () => {
                 disabled={cartItems.length === 0}
                 onClick={checkoutHandler}
               >
-                Processed to checkout
+                Proceed To Checkout
               </Button>
             </ListGroup.Item>
           </ListGroup>
