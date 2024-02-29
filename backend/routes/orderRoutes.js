@@ -13,7 +13,7 @@ import {
 
 router.route("/").get(protect, admin, getOrders).post(protect, createOrder);
 router.route("/myorders").get(protect, getUserOrders);
-router.route("/:id").get(getOrderById);
+router.route("/:id").get(protect, getOrderById);
 router.route("/:id/pay").put(protect, updateOrderToPaid);
 router.route("/:id/deliver").put(updateOrderToDelivered);
 
