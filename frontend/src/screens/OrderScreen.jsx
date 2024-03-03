@@ -37,13 +37,13 @@ const OrderScreen = () => {
     if (!errorPayPal && !loadingPayPal && paypal.clientId) {
       const loadPaypalScript = async () => {
         paypalDispatch({
-          type: 'resetOptions',
+          type: "resetOptions",
           value: {
-            'client-id': paypal.clientId,
-            currency: 'USD',
+            "client-id": paypal.clientId,
+            currency: "USD",
           },
         });
-        paypalDispatch({ type: 'setLoadingStatus', value: 'pending' });
+        paypalDispatch({ type: "setLoadingStatus", value: "pending" });
       };
       if (order && !order.isPaid) {
         if (!window.paypal) {
@@ -53,11 +53,10 @@ const OrderScreen = () => {
     }
   }, [errorPayPal, loadingPayPal, order, paypal, paypalDispatch]);
 
-
   function onApprove(data, actions) {
     return actions.order.capture().then(async function (details) {
       try {
-        console.log(details)
+        console.log(details);
         await payOrder(orderId, details);
         refetch();
         toast.success("Payment Successful");
@@ -189,9 +188,10 @@ const OrderScreen = () => {
                     <Loader />
                   ) : (
                     <div>
-                      <Button onClick={onApproveTest} style={{ marginBottom: "10px" }}>
+                      {/* For Testing Purposes */}
+                      {/* <Button onClick={onApproveTest} style={{ marginBottom: "10px" }}>
                         Test Pay Order
-                      </Button>
+                      </Button> */}
                       <div>
                         <PayPalButtons
                           createOrder={createOrder}
