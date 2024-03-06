@@ -7,7 +7,7 @@ import {
   useGetPayPalClientIdQuery,
   useCreateOrderMutation,
   usePayOrderMutation,
-} from "../slices/orderApiSlice";
+} from "../slices/ordersApiSlice";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import { toast } from "react-toastify";
 import Message from "../components/Message";

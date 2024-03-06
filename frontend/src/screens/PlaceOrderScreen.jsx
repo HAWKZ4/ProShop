@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
-import { useCreateOrderMutation } from "../slices/orderApiSlice";
+import { useCreateOrderMutation } from "../slices/ordersApiSlice";
 import { clearCartItems } from "../slices/cartSlice";
 import { toast } from "react-toastify";
 import CheckoutSteps from "../components/CheckoutSteps";
