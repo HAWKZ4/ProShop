@@ -5,8 +5,6 @@ import { useGetOrdersQuery } from "../../slices/ordersApiSlice";
 import Message from "../../components/Message";
 import Loader from "../../components/Loader";
 
-import { UseSelector, useSelector } from "react-redux";
-
 const OrderListScreen = () => {
   const { data: orders, isLoading, error } = useGetOrdersQuery();
 
@@ -26,7 +24,7 @@ const OrderListScreen = () => {
               <th>DATE</th>
               <th>TOTAL</th>
               <th>PAID</th>
-              <th>DELIVERD</th>
+              <th>DELIVERED</th>
               <th></th>
             </tr>
           </thead>
@@ -45,8 +43,8 @@ const OrderListScreen = () => {
                   )}
                 </td>
                 <td>
-                  {order.isDeliverd ? (
-                    order.delierdAt.substring(0, 10)
+                  {order.isDelivered ? (
+                    order.deliveredAt.substring(0, 10)
                   ) : (
                     <FaTimes style={{ color: "red" }} />
                   )}

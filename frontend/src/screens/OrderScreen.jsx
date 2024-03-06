@@ -1,27 +1,26 @@
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Row, Col, ListGroup, Image, Form, Button, Card } from "react-bootstrap";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { Row, Col, ListGroup, Image, Button, Card } from "react-bootstrap";
+import { Link, useParams } from "react-router-dom";
 import {
   useGetOrderDetailsQuery,
   useGetPayPalClientIdQuery,
-  useCreateOrderMutation,
   usePayOrderMutation,
 } from "../slices/ordersApiSlice";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
+import { useDeliverOrderMutation } from "../slices/ordersApiSlice";
 import { toast } from "react-toastify";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 
 const OrderScreen = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
   const { id: orderId } = useParams();
 
   const { data: order, refetch, isLoading, error } = useGetOrderDetailsQuery(orderId);
 
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
+
+  const [deliverOrder, { isLoading: loadingDeliver }] = useDeliverOrderMutation();
 
   const {
     data: paypal,
@@ -32,6 +31,16 @@ const OrderScreen = () => {
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
 
   const { userInfo } = useSelector((state) => state.auth);
+
+  const deliverOrderHandler = async () => {
+    try {
+      await deliverOrder(orderId);
+      refetch();
+      toast.success("Order delivered");
+    } catch (err) {
+      toast.error(err?.data?.message || err.message);
+    }
+  };
 
   useEffect(() => {
     if (!errorPayPal && !loadingPayPal && paypal.clientId) {
@@ -65,11 +74,13 @@ const OrderScreen = () => {
       }
     });
   }
-  async function onApproveTest() {
-    await payOrder({ orderId, details: { payer: {} } });
-    refetch();
-    toast.success("Payment Successful");
-  }
+
+  /* For Testing Purposes */
+  // async function onApproveTest() {
+  //   await payOrder({ orderId, details: { payer: {} } });
+  //   refetch();
+  //   toast.success("Payment Successful");
+  // }
   function createOrder(data, actions) {
     return actions.order
       .create({
@@ -114,8 +125,8 @@ const OrderScreen = () => {
                 {order.shippingAddress.postalCode}, {""}
                 {order.shippingAddress.coutnry}, {""}
               </p>
-              {order.isDeliverd ? (
-                <Message variant="success">Deliverd On {order.deliverdAt}</Message>
+              {order.isDelivered ? (
+                <Message variant="success">Delivered On {order.deliveredAt}</Message>
               ) : (
                 <Message variant="danger">Not Delivered</Message>
               )}
@@ -203,7 +214,15 @@ const OrderScreen = () => {
                   )}
                 </ListGroup.Item>
               )}
-              {/* Mark as deliverd placeholder */}
+              {loadingDeliver && <Loader />}
+
+              {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                <ListGroup.Item>
+                  <Button type="button" className="btn btn-block" onClick={deliverOrderHandler}>
+                    Mark As Delivered
+                  </Button>
+                </ListGroup.Item>
+              )}
             </ListGroup>
           </Card>
         </Col>

@@ -110,7 +110,7 @@ const ProfileScreen = () => {
                 <th>DATE</th>
                 <th>TOTAL</th>
                 <th>PAID</th>
-                <th>DELIVERD</th>
+                <th>DELIVERED</th>
                 <th></th>
               </tr>
             </thead>
@@ -128,7 +128,7 @@ const ProfileScreen = () => {
                     )}
                   </td>
                   <td>
-                    {order.isDeliverd ? (
+                    {order.isDelivered ? (
                       order.deilverdAt.subString(0, 10)
                     ) : (
                       <FaTimes style={{ color: "red" }} />
