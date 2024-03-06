@@ -3,7 +3,7 @@ import { Table, Form, Button, Row, Col } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { useProfileMutation } from "../slices/usersApiSlice";
-import { useGetOrdersQuery } from "../slices/ordersApiSlice";
+import { useGetMyOrdersQuery } from "../slices/ordersApiSlice";
 import { setCredentials } from "../slices/authSlice";
 import { FaTimes } from "react-icons/fa";
 import Message from "../components/Message";
@@ -20,7 +20,7 @@ const ProfileScreen = () => {
 
   const [updateProfile, { isLoading: LoadingUpdateProfile }] = useProfileMutation();
 
-  const { data: orders, isLoading, error } = useGetOrdersQuery();
+  const { data: orders, isLoading, error } = useGetMyOrdersQuery();
 
   useEffect(() => {
     if (userInfo) {
