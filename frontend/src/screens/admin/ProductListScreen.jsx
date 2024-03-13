@@ -20,20 +20,12 @@ const ProductListScreen = () => {
   const deleteHandler = async (productId) => {
     if (window.confirm("Are you sure?")) {
       try {
-        deleteProduct(id);
-        toast.success("Product deleted");
+        await deleteProduct(productId);
+        toast.success("Product Removed");
         refetch();
       } catch (err) {
         toast.error(err?.data?.message || err.error);
       }
-    }
-
-    const res = await deleteProduct(productId);
-    if (res) {
-      res.status(200);
-      toast.success("Product Deleted");
-    } else {
-      toast.error(res);
     }
   };
 
