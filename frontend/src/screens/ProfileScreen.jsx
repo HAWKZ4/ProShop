@@ -35,7 +35,7 @@ const ProfileScreen = () => {
       toast.error("Password do not match");
     } else {
       try {
-        const res = await updateProfile({ name, email, password }).unwrap(); // Try without _id :TODO: FIXME:
+        const res = await updateProfile({ name, email, password }).unwrap();
         dispatch(setCredentials(res));
         toast.success("Profile updated successfully");
       } catch (err) {
