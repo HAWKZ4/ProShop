@@ -5,6 +5,7 @@ import Paginate from "../components/Paginate";
 import { Row, Col } from "react-bootstrap";
 import { useGetProductsQuery } from "../slices/productsApiSlice";
 import { Link, useParams } from "react-router-dom";
+import ProductCarousel from "../components/ProductCarousel";
 
 const HomeScreen = () => {
   const { pageNumber, keyword } = useParams();
@@ -13,12 +14,15 @@ const HomeScreen = () => {
 
   return (
     <>
-      {keyword && (
+      {!keyword ? (
+        <ProductCarousel />
+      ) : (
         <Link to="/" className="btn btn-light my-4">
           Go Back
         </Link>
       )}
       <h1>Latest Products</h1>
+
       {isLoading ? (
         <Loader />
       ) : error ? (
