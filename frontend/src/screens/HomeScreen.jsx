@@ -4,15 +4,20 @@ import Message from "../components/Message";
 import Paginate from "../components/Paginate";
 import { Row, Col } from "react-bootstrap";
 import { useGetProductsQuery } from "../slices/productsApiSlice";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const HomeScreen = () => {
-  const { pageNumber } = useParams();
+  const { pageNumber, keyword } = useParams();
 
-  const { data, isLoading, error } = useGetProductsQuery({ pageNumber });
+  const { data, isLoading, error } = useGetProductsQuery({ pageNumber, keyword });
 
   return (
     <>
+      {keyword && (
+        <Link to="/" className="btn btn-light my-4">
+          Go Back
+        </Link>
+      )}
       <h1>Latest Products</h1>
       {isLoading ? (
         <Loader />
@@ -28,7 +33,7 @@ const HomeScreen = () => {
             ))}
           </Row>
           <Row>
-            <Paginate pages={data.pages} page={data.page} />
+            <Paginate pages={data.pages} page={data.page} keyword={keyword} />
           </Row>
         </>
       )}
